@@ -14,3 +14,171 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * @summary List all tools
+ */
+export const ListToolsQueryParams = zod.object({
+  locationId: zod.coerce.number().optional(),
+  search: zod.coerce.string().optional(),
+});
+
+export const ListToolsResponseItem = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  description: zod.string().nullish(),
+  category: zod.string().nullish(),
+  condition: zod.enum(["excellent", "good", "fair", "poor"]),
+  locationId: zod.number(),
+  locationName: zod.string().nullish(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+  createdAt: zod.coerce.date(),
+  updatedAt: zod.coerce.date(),
+});
+export const ListToolsResponse = zod.array(ListToolsResponseItem);
+
+/**
+ * @summary Create a new tool
+ */
+export const CreateToolBody = zod.object({
+  name: zod.string(),
+  description: zod.string().nullish(),
+  category: zod.string().nullish(),
+  condition: zod.enum(["excellent", "good", "fair", "poor"]),
+  locationId: zod.number(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+});
+
+/**
+ * @summary Get a tool by ID
+ */
+export const GetToolParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetToolResponse = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  description: zod.string().nullish(),
+  category: zod.string().nullish(),
+  condition: zod.enum(["excellent", "good", "fair", "poor"]),
+  locationId: zod.number(),
+  locationName: zod.string().nullish(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+  createdAt: zod.coerce.date(),
+  updatedAt: zod.coerce.date(),
+});
+
+/**
+ * @summary Update a tool
+ */
+export const UpdateToolParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateToolBody = zod.object({
+  name: zod.string().optional(),
+  description: zod.string().nullish(),
+  category: zod.string().nullish(),
+  condition: zod.enum(["excellent", "good", "fair", "poor"]).optional(),
+  locationId: zod.number().optional(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+});
+
+export const UpdateToolResponse = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  description: zod.string().nullish(),
+  category: zod.string().nullish(),
+  condition: zod.enum(["excellent", "good", "fair", "poor"]),
+  locationId: zod.number(),
+  locationName: zod.string().nullish(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+  createdAt: zod.coerce.date(),
+  updatedAt: zod.coerce.date(),
+});
+
+/**
+ * @summary Delete a tool
+ */
+export const DeleteToolParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary List all locations
+ */
+export const ListLocationsResponseItem = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  address: zod.string().nullish(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+  createdAt: zod.coerce.date(),
+});
+export const ListLocationsResponse = zod.array(ListLocationsResponseItem);
+
+/**
+ * @summary Create a new location
+ */
+export const CreateLocationBody = zod.object({
+  name: zod.string(),
+  address: zod.string().nullish(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+});
+
+/**
+ * @summary Delete a location
+ */
+export const DeleteLocationParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary Get dashboard summary stats
+ */
+export const GetDashboardSummaryResponse = zod.object({
+  totalTools: zod.number(),
+  totalLocations: zod.number(),
+  toolsByCondition: zod.record(zod.string(), zod.number()),
+  mostActiveLocation: zod.string().nullish(),
+  recentlyAdded: zod.number(),
+});
+
+/**
+ * @summary Get tool counts grouped by location
+ */
+export const GetToolsByLocationResponseItem = zod.object({
+  locationId: zod.number(),
+  locationName: zod.string(),
+  toolCount: zod.number(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+});
+export const GetToolsByLocationResponse = zod.array(
+  GetToolsByLocationResponseItem,
+);
+
+/**
+ * @summary Get recently added tools
+ */
+export const GetRecentToolsResponseItem = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  description: zod.string().nullish(),
+  category: zod.string().nullish(),
+  condition: zod.enum(["excellent", "good", "fair", "poor"]),
+  locationId: zod.number(),
+  locationName: zod.string().nullish(),
+  latitude: zod.number().nullish(),
+  longitude: zod.number().nullish(),
+  createdAt: zod.coerce.date(),
+  updatedAt: zod.coerce.date(),
+});
+export const GetRecentToolsResponse = zod.array(GetRecentToolsResponseItem);

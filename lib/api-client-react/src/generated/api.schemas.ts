@@ -8,3 +8,109 @@
 export interface HealthStatus {
   status: string;
 }
+
+export type ToolCondition = (typeof ToolCondition)[keyof typeof ToolCondition];
+
+export const ToolCondition = {
+  excellent: "excellent",
+  good: "good",
+  fair: "fair",
+  poor: "poor",
+} as const;
+
+export interface Tool {
+  id: number;
+  name: string;
+  description?: string | null;
+  category?: string | null;
+  condition: ToolCondition;
+  locationId: number;
+  locationName?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateToolBodyCondition =
+  (typeof CreateToolBodyCondition)[keyof typeof CreateToolBodyCondition];
+
+export const CreateToolBodyCondition = {
+  excellent: "excellent",
+  good: "good",
+  fair: "fair",
+  poor: "poor",
+} as const;
+
+export interface CreateToolBody {
+  name: string;
+  description?: string | null;
+  category?: string | null;
+  condition: CreateToolBodyCondition;
+  locationId: number;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
+export type UpdateToolBodyCondition =
+  (typeof UpdateToolBodyCondition)[keyof typeof UpdateToolBodyCondition];
+
+export const UpdateToolBodyCondition = {
+  excellent: "excellent",
+  good: "good",
+  fair: "fair",
+  poor: "poor",
+} as const;
+
+export interface UpdateToolBody {
+  name?: string;
+  description?: string | null;
+  category?: string | null;
+  condition?: UpdateToolBodyCondition;
+  locationId?: number;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
+export interface Location {
+  id: number;
+  name: string;
+  address?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  createdAt: string;
+}
+
+export interface CreateLocationBody {
+  name: string;
+  address?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
+export type DashboardSummaryToolsByCondition = { [key: string]: number };
+
+export interface DashboardSummary {
+  totalTools: number;
+  totalLocations: number;
+  toolsByCondition: DashboardSummaryToolsByCondition;
+  mostActiveLocation?: string | null;
+  recentlyAdded: number;
+}
+
+export interface LocationToolCount {
+  locationId: number;
+  locationName: string;
+  toolCount: number;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
+export interface ErrorResponse {
+  error: string;
+}
+
+export type ListToolsParams = {
+  locationId?: number;
+  search?: string;
+};
